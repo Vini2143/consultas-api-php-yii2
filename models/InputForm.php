@@ -11,7 +11,7 @@ class InputForm extends Model
     public function rules()
     {
         return [
-            [['item'], 'required']
+            [['item', 'city'], 'required']
         ];
     }
 

@@ -5,17 +5,28 @@ use yii\bootstrap5\Html;
 $form = ActiveForm::begin();
 ?>
 <div class="site-index">
-    <?php echo $form->field($model, 'item')->textInput() ?>
-    <?php echo $form->field($model, 'city')->textInput() ?>
+    <?php echo $form->field($model, 'item')->textInput(); ?>
+    <?php echo $form->field($model, 'city')->dropDownList([
+            false => 'Todas',
+            'Thetford' => 'Thetford',
+            'Bridgewatch' => 'Bridgewatch',
+            'Lymhurst' => 'Lymhurst',
+            'Fort Sterling' => 'Fort Sterling',
+            'Martlock' => 'Martlock',
+            'Caerleon' => 'Caerleon',
+            'Black Market' => 'Black Market'
+        ]);
+    ?>
+
     <div class="form-group">
         <?php echo Html::submitButton('Consulta', ['class' => 'btn btn-primary']) ?>
     </div>
-    <pre>
 
+    <pre>
     <?php ActiveForm::end();
     foreach ($dados as $dado){
-        echo $dado['city'] . ' ' . $dado['sell_price_max'] . ' ' . $dado['buy_price_max'] . '<br>';
-    }    
+        print_r($dado); 
+    }   
     ?>
     </pre>
     
