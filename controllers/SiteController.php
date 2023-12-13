@@ -17,6 +17,7 @@ class SiteController extends Controller
         $inputForm = new InputForm;
 
         if ($inputForm->load(Yii::$app->request->post()) && $inputForm->validate()) {
+            $resposta = [];
 
             $itens = ItemList::find()
                 ->where('name LIKE "%'. $inputForm['item'] .'%"')
@@ -35,11 +36,13 @@ class SiteController extends Controller
                 'dados' => $resposta,
                 'model' => $inputForm
             ]);
-        }
-        
-        return $this->render('index', [
-            'model' => $inputForm
-        ]);
+
+        } else {
+
+            return $this->render('index', [
+                'model' => $inputForm
+            ]);
+        }   
             
         
     }
