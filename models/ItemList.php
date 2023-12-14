@@ -8,4 +8,10 @@ class ItemList extends ActiveRecord
     public static function tableName() {
         return 'item_list';
     }
+
+    public static function getItemByName($name) {
+        return static::find()
+            ->where('name LIKE "%'. $name . '%"')
+            ->all();
+    }
 }

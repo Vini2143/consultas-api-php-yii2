@@ -19,32 +19,27 @@ class SiteController extends Controller
         if ($inputForm->load(Yii::$app->request->post()) && $inputForm->validate()) {
             $resposta = [];
 
-            $itens = ItemList::find()
-                ->where('name LIKE "%'. $inputForm['item'] .'%"')
-                ->all();
+            $itens = ItemList::getItemByName($inputForm['item']);
             
             
             foreach ($itens as $item) {
                 $requisição = new AlbionApiRequest($item->item_code, $inputForm['city'], 30);
                 $retorno = $requisição->executar();
         
-                array_push($resposta, $retorno);
-    
+                $resposta[$item['name']] = $retorno;
             }
 
-            return $this->render('resultados',[
+            return $this->render('results',[
                 'dados' => $resposta,
                 'model' => $inputForm
             ]);
 
-        } else {
+        }
 
-            return $this->render('index', [
-                'model' => $inputForm
-            ]);
-        }   
-            
-        
+        return $this->render('index', [
+            'model' => $inputForm
+        ]);
+    
     }
 
 
