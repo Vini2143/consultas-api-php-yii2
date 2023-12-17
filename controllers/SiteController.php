@@ -17,20 +17,11 @@ class SiteController extends Controller
         $inputForm = new InputForm;
 
         if ($inputForm->load(Yii::$app->request->post()) && $inputForm->validate()) {
-            $resposta = [];
 
-            $itens = ItemList::getItemByName($inputForm['item']);
-            
-            
-            foreach ($itens as $item) {
-                $requisição = new AlbionApiRequest($item->item_code, $inputForm['city'], 30);
-                $retorno = $requisição->executar();
-        
-                $resposta[$item['name']] = $retorno;
-            }
+            $respostas = ItemList::getData($inputForm['item'], $inputForm['city']);
 
             return $this->render('results',[
-                'dados' => $resposta,
+                'dados' => $respostas,
                 'model' => $inputForm
             ]);
 
