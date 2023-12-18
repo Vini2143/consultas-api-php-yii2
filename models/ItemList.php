@@ -14,4 +14,21 @@ class ItemList extends ActiveRecord
             ->where('name LIKE "%'. $name . '%"')
             ->all();
     }
+
+    public static function getData($name, $city = false)
+    {
+        $itens = self::getItemByName($name);
+        $resultados = [];
+
+        foreach ($itens as $item) {
+            
+            $requisição = new AlbionApiRequest($item->item_code, $city);
+            $retorno = $requisição->executar();
+    
+            $resultados[$item['name']] = $retorno;
+
+        }
+
+        return $resultados;
+    }
 }

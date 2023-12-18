@@ -10,7 +10,7 @@ class AlbionApiRequest extends Model
     public $city;
     public $url;
 
-    public function __construct($item, $city = false, $interval = 60)
+    public function __construct($item, $city)
     {   
         $this->item = $item;
         $this->city = $city;

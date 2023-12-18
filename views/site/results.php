@@ -1,7 +1,7 @@
 <?php
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
-use yii\console\widgets\Table;
+use yii\grid\GridView;
 
 
 $this->params['breadcrumbs'][] = 'Resultados';
@@ -26,39 +26,28 @@ $form = ActiveForm::begin();
         <?php echo Html::submitButton('Consulta', ['class' => 'btn btn-primary']) ?>
     </div>
 
-    <pre>
     <?php ActiveForm::end(); ?>
-    </pre>
     
-
     <div class="body-content">
-        <pre>
+        
         <?php
-        echo Table::widget([
-            'headers' => ['test1', 'test2', 'test3'],
-            'rows' => [
-                ['col1', 'col2', 'col3'],
-                ['col1', 'col2', 'col3'],
-            ],
-        ]);
-
-        print_r($dados);/* foreach ($dados as $item) { ?>
+        //print_r($dados);
+        foreach ($dados as $nome => $item) { ?>
             <div>
-                <?php echo $item['Nome']?>
-                <br>
+                <b><?php echo $nome?></b><br>
                 
-                <?php foreach ($item['Registros'] as $registro) { ?>
+                <?php foreach ($item as $registro) { ?>
                     
-                    <?php echo $registro['city'] ?>
-                    <?php echo $registro['sell_price_min'] ?>
-                    <?php echo $registro['sell_price_max'] ?>
+                    <?php echo $registro['city'] ?> ->
+                    <small><?php echo $registro['sell_price_min'] ?></small> -
+                    <small><?php echo $registro['sell_price_max'] ?></small>
                     <br>
                 <?php } ?>
             
             </div>
             <br>
-        <?php } */ ?>
-        </pre>
+        <?php } ?>
+        
 
     </div>
 </div>
