@@ -26,8 +26,9 @@ class SiteController extends Controller
                 $requisição = new AlbionApiRequest($item->item_code, $inputForm['city'], 30);
                 $retorno = $requisição->executar();
         
-                $resposta[$item['name']] = $retorno;
+                array_push($resposta, [$item['name'] => $retorno]);
             }
+
 
             return $this->render('results',[
                 'dados' => $resposta,
