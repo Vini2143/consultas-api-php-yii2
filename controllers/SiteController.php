@@ -3,11 +3,9 @@
 namespace projeto1\controllers;
 
 use yii\web\Controller;
-use projeto1\models\AlbionApiRequest;
 use projeto1\models\InputForm;
 use projeto1\models\ItemList;
 use Yii;
-
 
 class SiteController extends Controller
 {
@@ -15,6 +13,7 @@ class SiteController extends Controller
     public function actionIndex()
     {   
         $inputForm = new InputForm;
+        
 
         if ($inputForm->load(Yii::$app->request->post()) && $inputForm->validate()) {
 

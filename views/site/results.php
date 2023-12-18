@@ -1,8 +1,6 @@
 <?php
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
-use yii\grid\GridView;
-
 
 $this->params['breadcrumbs'][] = 'Resultados';
 
@@ -34,15 +32,19 @@ $form = ActiveForm::begin();
         //print_r($dados);
         foreach ($dados as $nome => $item) { ?>
             <div>
-                <b><?php echo $nome?></b><br>
+                <b><?php echo $nome?></b>
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#<?php echo str_replace(' ', '', lcfirst($nome)); ?>">Mostrar</button>
+                <br>
+                <div class="collapse" id="<?php echo str_replace(' ', '', lcfirst($nome));?>">
                 
                 <?php foreach ($item as $registro) { ?>
                     
-                    <?php echo $registro['city'] ?> ->
+                    <?php echo $registro['city'] ?> -> 
                     <small><?php echo $registro['sell_price_min'] ?></small> -
                     <small><?php echo $registro['sell_price_max'] ?></small>
                     <br>
                 <?php } ?>
+                </div>
             
             </div>
             <br>
