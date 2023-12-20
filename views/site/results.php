@@ -2,6 +2,8 @@
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
+use yii\widgets\Pjax;
+
 $this->params['breadcrumbs'][] = 'Resultados';
 
 $form = ActiveForm::begin();
@@ -24,23 +26,23 @@ $form = ActiveForm::begin();
         <?php echo Html::submitButton('Consulta', ['class' => 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); 
+    $num = 1; ?>
     
-    <div class="body-content border rounded p-1">
+    <div class="body-content border rounded p-1 mt-3">
         
         <?php
         foreach ($dados as $nome => $item) { ?>
-            <div class="border rounded">
-                <?php 
-                echo Html::tag('b', $nome, [
-                    'class' => 'col-3'
-                ]);
-                echo Html::tag('button', 'Mostrar', [
-                    'class' => 'btn btn-success col-2',
+            <div class="border rounded p-1 m-1">
+                <?php echo Html::tag('b', $nome); ?>
+
+                <?php echo Html::button('Mostrar', [
+                    'class' => 'btn btn-success',
                     'data-toggle' => 'collapse',
                     'data-target' => '#' . str_replace(' ', '', lcfirst($nome)),  
-                ]); 
-                ?>
+                ]); ?>
+
+
                 <br>
                 <div class="collapse" id="<?php echo str_replace(' ', '', lcfirst($nome));?>">
                 
@@ -55,7 +57,6 @@ $form = ActiveForm::begin();
                 </div>
             
             </div>
-            <br>
         <?php } ?>
 
         <?php

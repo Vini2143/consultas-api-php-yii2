@@ -32,6 +32,11 @@ class SiteController extends Controller
     
     }
 
+    public function actionTestePjax()
+    {
+        return $this->render('testePjax');
+    }
+
 
     /* public function actionCriarItemList()
     {   
