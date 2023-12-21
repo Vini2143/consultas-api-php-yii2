@@ -13,13 +13,14 @@ class SiteController extends Controller
     public function actionIndex()
     {   
         $inputForm = new InputForm;
+        $respostas = [];
         
 
-        if ($inputForm->load(Yii::$app->request->post()) && $inputForm->validate()) {
+        if ($inputForm->load(Yii::$app->request->post()) && $inputForm->validate() && Yii::$app->request->isAjax) {
 
             $respostas = ItemList::getData($inputForm['item'], $inputForm['city']);
 
-            return $this->render('results',[
+            return $this->renderPartial('index',[
                 'dados' => $respostas,
                 'model' => $inputForm
             ]);
@@ -27,14 +28,33 @@ class SiteController extends Controller
         }
 
         return $this->render('index', [
-            'model' => $inputForm
+            'model' => $inputForm,
+            'dados' => $respostas,
         ]);
     
     }
 
     public function actionTestePjax()
     {
-        return $this->render('testePjax');
+        $inputForm = new InputForm;
+        $respostas = ['nada'];
+        
+
+        if ($inputForm->load(Yii::$app->request->post()) && $inputForm->validate()) {
+
+            $respostas = ItemList::getData($inputForm['item'], $inputForm['city']);
+
+            return $this->renderAjax('_testePjax',[
+                'dados' => $respostas,
+                'model' => $inputForm,
+            ]);
+
+        }
+
+        return $this->render('testePjax', [
+            'dados' => $respostas,
+            'model' => $inputForm,
+        ]);
     }
 
 

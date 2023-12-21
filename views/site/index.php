@@ -2,10 +2,11 @@
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
-use yii\bootstrap5\ButtonDropdown;
+use yii\widgets\Pjax;
 
+Pjax::begin();
 
-$form = ActiveForm::begin();
+$form = ActiveForm::begin(['options' => ['data' => ['pjax' => 1]]]);
 ?>
 <div class="site-index">
     <?php echo $form->field($model, 'item')->textInput(); ?>
@@ -27,41 +28,32 @@ $form = ActiveForm::begin();
     <?php ActiveForm::end(); ?>
 
     <div class="body-content">
-        <br>
+        <?php foreach ($dados as $nome => $item) { ?>
+            <div class="border rounded d-inline-block p-1 m-1">
 
-        <?php
-        echo ButtonDropdown::widget([
-            'label' => 'Botão dropdown yii',
-            'buttonOptions' => ['class' => 'btn btn-secondary text-white'],
-            'dropdown' => [
-                'items' => [
-                    ['label' => 'DropdownA', 'url' => '#'],
-                    ['label' => 'DropdownB', 'url' => '#'],
-                    ['label' => 'DropdownC', 'url' => '#']
-                ],
-            ],
+                <?php echo Html::button($nome, [
+                    'class' => 'btn btn-secondary',
+                    'data-toggle' => 'collapse',
+                    'data-target' => '#' . str_replace(' ', '', lcfirst($nome)),  
+                ]); ?>
+
+                <div class="collapse" id="<?php echo str_replace(' ', '', lcfirst($nome));?>">
+                
+                <?php foreach ($item as $registro) { ?>
+                    <br>
+                    
+                    <?php echo $registro['city']; ?> -> 
+                    <?php echo Html::tag('small', $registro['sell_price_min']); ?>  
+                    <?php echo Html::tag('small', $registro['sell_price_max']); ?>
+                    
+                <?php } ?>
+                </div>
             
-        ]);
-        ?>
-        
-        <br>
-        <br>
-
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Botão dropdown bootstrap
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">DropdownA</a>
-                <a class="dropdown-item" href="#">DropdownB</a>
-                <a class="dropdown-item" href="#">DropdownC</a>
             </div>
-        </div>
-
-            
-
+        <?php } ?>
             
 
 
     </div>
 </div>
+<?php Pjax::end(); ?>

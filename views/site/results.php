@@ -26,13 +26,12 @@ $form = ActiveForm::begin();
         <?php echo Html::submitButton('Consulta', ['class' => 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); 
-    $num = 1; ?>
+    <?php ActiveForm::end(); ?>
     
     <div class="body-content border rounded p-1 mt-3">
         
-        <?php
-        foreach ($dados as $nome => $item) { ?>
+        <?php print_r($dados);
+        /* foreach ($dados as $nome => $item) { ?>
             <div class="border rounded p-1 m-1">
                 <?php echo Html::tag('b', $nome); ?>
 
@@ -57,7 +56,7 @@ $form = ActiveForm::begin();
                 </div>
             
             </div>
-        <?php } ?>
+        <?php } */ ?>
 
         <?php
         //print_r($dados);
