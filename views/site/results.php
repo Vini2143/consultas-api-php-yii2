@@ -29,8 +29,19 @@ $form = ActiveForm::begin();
     <?php ActiveForm::end(); ?>
     
     <div class="body-content border rounded p-1 mt-3">
+
+        <?php Pjax::begin([
+            'id' => 'idpjax1'
+        ] 
+        ); ?>
         
-        <?php print_r($dados);
+        <?php Pjax::end(); ?>
+
+
+        <?php foreach ($dados as $item) {
+            echo $item['name']. '<br>';
+        }
+        
         /* foreach ($dados as $nome => $item) { ?>
             <div class="border rounded p-1 m-1">
                 <?php echo Html::tag('b', $nome); ?>

@@ -4,7 +4,6 @@ use yii\bootstrap5\Html;
 
 use yii\widgets\Pjax;
 
-Pjax::begin();
 
 $form = ActiveForm::begin(['options' => ['data' => ['pjax' => 1]]]);
 ?>
@@ -28,7 +27,8 @@ $form = ActiveForm::begin(['options' => ['data' => ['pjax' => 1]]]);
     <?php ActiveForm::end(); ?>
 
     <div class="body-content">
-        <?php foreach ($dados as $nome => $item) { ?>
+        
+        <?php /* foreach ($dados as $nome => $item) { ?>
             <div class="border rounded d-inline-block p-1 m-1">
 
                 <?php echo Html::button($nome, [
@@ -37,23 +37,24 @@ $form = ActiveForm::begin(['options' => ['data' => ['pjax' => 1]]]);
                     'data-target' => '#' . str_replace(' ', '', lcfirst($nome)),  
                 ]); ?>
 
-                <div class="collapse" id="<?php echo str_replace(' ', '', lcfirst($nome));?>">
+                <div class="collapse rounded" id="<?php echo str_replace(' ', '', lcfirst($nome));?>">
                 
                 <?php foreach ($item as $registro) { ?>
-                    <br>
+                    <div class="d-inline-block p-1 m-1">
                     
                     <?php echo $registro['city']; ?> -> 
                     <?php echo Html::tag('small', $registro['sell_price_min']); ?>  
                     <?php echo Html::tag('small', $registro['sell_price_max']); ?>
+
+                    </div>
                     
                 <?php } ?>
                 </div>
             
             </div>
-        <?php } ?>
+        <?php } */ ?>
             
 
 
     </div>
 </div>
-<?php Pjax::end(); ?>

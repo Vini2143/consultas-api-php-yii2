@@ -13,14 +13,12 @@ class SiteController extends Controller
     public function actionIndex()
     {   
         $inputForm = new InputForm;
-        $respostas = [];
-        
 
-        if ($inputForm->load(Yii::$app->request->post()) && $inputForm->validate() && Yii::$app->request->isAjax) {
+        if ($inputForm->load(Yii::$app->request->post()) && $inputForm->validate()) {
 
-            $respostas = ItemList::getData($inputForm['item'], $inputForm['city']);
+            $respostas = ItemList::getItemsByName($inputForm['item'], $inputForm['city']);
 
-            return $this->renderPartial('index',[
+            return $this->render('results',[
                 'dados' => $respostas,
                 'model' => $inputForm
             ]);
@@ -28,8 +26,7 @@ class SiteController extends Controller
         }
 
         return $this->render('index', [
-            'model' => $inputForm,
-            'dados' => $respostas,
+            'model' => $inputForm
         ]);
     
     }
