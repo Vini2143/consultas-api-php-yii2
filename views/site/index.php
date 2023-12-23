@@ -2,14 +2,12 @@
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
-use yii\widgets\Pjax;
 
-
-$form = ActiveForm::begin(['options' => ['data' => ['pjax' => 1]]]);
+$form = ActiveForm::begin();
 ?>
 <div class="site-index">
     <?php echo $form->field($model, 'item')->textInput(); ?>
-    <?php echo $form->field($model, 'city')->dropDownList([
+    <?php /* echo $form->field($model, 'city')->dropDownList([
             false => 'Todas',
             'Thetford' => 'Thetford',
             'Bridgewatch' => 'Bridgewatch',
@@ -18,7 +16,7 @@ $form = ActiveForm::begin(['options' => ['data' => ['pjax' => 1]]]);
             'Martlock' => 'Martlock',
             'Caerleon' => 'Caerleon',
             'Black Market' => 'Black Market'
-        ]);
+        ]); */
     ?>
 
     <div class="form-group">
@@ -28,33 +26,5 @@ $form = ActiveForm::begin(['options' => ['data' => ['pjax' => 1]]]);
 
     <div class="body-content">
         
-        <?php /* foreach ($dados as $nome => $item) { ?>
-            <div class="border rounded d-inline-block p-1 m-1">
-
-                <?php echo Html::button($nome, [
-                    'class' => 'btn btn-secondary',
-                    'data-toggle' => 'collapse',
-                    'data-target' => '#' . str_replace(' ', '', lcfirst($nome)),  
-                ]); ?>
-
-                <div class="collapse rounded" id="<?php echo str_replace(' ', '', lcfirst($nome));?>">
-                
-                <?php foreach ($item as $registro) { ?>
-                    <div class="d-inline-block p-1 m-1">
-                    
-                    <?php echo $registro['city']; ?> -> 
-                    <?php echo Html::tag('small', $registro['sell_price_min']); ?>  
-                    <?php echo Html::tag('small', $registro['sell_price_max']); ?>
-
-                    </div>
-                    
-                <?php } ?>
-                </div>
-            
-            </div>
-        <?php } */ ?>
-            
-
-
     </div>
 </div>

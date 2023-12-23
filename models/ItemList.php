@@ -38,14 +38,14 @@ class ItemList extends ActiveRecord
         return $items;
     }
 
-    public static function getData($name, $city = false)
+    public static function getItemsData($name, $city = false)
     {
         $itens = self::getItemsByName($name);
         $resultados = [];
 
         foreach ($itens as $item) {
             
-            $requisição = new AlbionApiRequest($item->item_code, $city);
+            $requisição = new AlbionApiRequest($item['item_code'], $city);
             $retorno = $requisição->executar();
     
             $resultados[$item['name']] = $retorno;

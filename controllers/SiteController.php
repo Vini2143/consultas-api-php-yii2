@@ -14,9 +14,11 @@ class SiteController extends Controller
     {   
         $inputForm = new InputForm;
 
+        $inputForm->city = 0;
+        
         if ($inputForm->load(Yii::$app->request->post()) && $inputForm->validate()) {
 
-            $respostas = ItemList::getItemsByName($inputForm['item'], $inputForm['city']);
+            $respostas = ItemList::getItemsByName($inputForm['item']);
 
             return $this->render('results',[
                 'dados' => $respostas,
@@ -31,27 +33,25 @@ class SiteController extends Controller
     
     }
 
-    public function actionTestePjax()
+    public function actionUpgradeList()
     {
         $inputForm = new InputForm;
-        $respostas = ['nada'];
-        
 
         if ($inputForm->load(Yii::$app->request->post()) && $inputForm->validate()) {
 
-            $respostas = ItemList::getData($inputForm['item'], $inputForm['city']);
+            $respostas = ItemList::getItemsData($inputForm['item'], $inputForm['city']);
 
-            return $this->renderAjax('_testePjax',[
+            return $this->renderAjax('_results',[
                 'dados' => $respostas,
-                'model' => $inputForm,
             ]);
 
         }
 
-        return $this->render('testePjax', [
-            'dados' => $respostas,
-            'model' => $inputForm,
-        ]);
+        //return $this->renderAjax('_results');
+
+
+
+
     }
 
 
