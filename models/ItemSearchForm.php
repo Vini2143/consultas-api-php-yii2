@@ -3,23 +3,21 @@ namespace projeto1\models;
 
 use yii\base\Model;
 
-class InputForm extends Model
+class ItemNameForm extends Model
 {
-    public $item;
-    public $city;
+    public $search;
 
     public function rules()
     {
         return [
-            [['item', 'city'], 'required']
+            ['search', 'required']
         ];
     }
 
     public function atributeLabels()
     {
         return [
-            'item' => 'Código do item',
-            'city' => 'Cidade'
+            'search' => 'Nome do item',
         ];
     }
 }

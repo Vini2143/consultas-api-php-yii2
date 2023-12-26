@@ -3,7 +3,8 @@
 namespace projeto1\controllers;
 
 use yii\web\Controller;
-use projeto1\models\InputForm;
+use projeto1\models\ItemSearchForm;
+use projeto1\models\ItemDataForm;
 use projeto1\models\ItemList;
 use Yii;
 
@@ -12,16 +13,16 @@ class SiteController extends Controller
 
     public function actionIndex()
     {   
-        $inputForm = new InputForm;
-
-        $inputForm->city = 0;
+        $inputForm = new ItemDataForm;
+        $inputForm['city'] = 0;
+        $inputForm['items'] = [' '];
         
         if ($inputForm->load(Yii::$app->request->post()) && $inputForm->validate()) {
 
-            $respostas = ItemList::getItemsByName($inputForm['item']);
+            $ListaDeItens = ItemList::getItemsByName($inputForm['search']);
 
             return $this->render('results',[
-                'dados' => $respostas,
+                'itemList' => $ListaDeItens,
                 'model' => $inputForm
             ]);
 
@@ -35,14 +36,18 @@ class SiteController extends Controller
 
     public function actionUpgradeList()
     {
-        $inputForm = new InputForm;
+        $inputForm = new ItemDataForm;
 
         if ($inputForm->load(Yii::$app->request->post()) && $inputForm->validate()) {
 
-            $respostas = ItemList::getItemsData($inputForm['item'], $inputForm['city']);
+            $listaDeItens = ItemList::getItemsByName($inputForm['search']);
+
+            $respostas =ItemList::getItemsData($inputForm['items'], $inputForm['city']);
 
             return $this->renderAjax('_results',[
                 'dados' => $respostas,
+                'itemList' => $listaDeItens,
+                'model' => $inputForm
             ]);
 
         }

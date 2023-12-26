@@ -32,23 +32,22 @@ class ItemList extends ActiveRecord
 
             ], $tier .'.'. $enchant, $item->name);
 
-            array_push($items, ['name' => $name, 'item_code' => $item->item_code]);
+            $items[$item->item_code] = $name;
         }
 
         return $items;
     }
 
-    public static function getItemsData($name, $city = false)
+    public static function getItemsData($items, $city)
     {
-        $itens = self::getItemsByName($name);
         $resultados = [];
 
-        foreach ($itens as $item) {
+        foreach ($items as $item) {
             
-            $requisição = new AlbionApiRequest($item['item_code'], $city);
+            $requisição = new AlbionApiRequest($item, $city);
             $retorno = $requisição->executar();
     
-            $resultados[$item['name']] = $retorno;
+            array_push($resultados, $retorno);
 
         }
 
