@@ -3,7 +3,7 @@ namespace projeto1\models;
 
 use yii\base\Model;
 
-class ItemNameForm extends Model
+class ItemSearchForm extends Model
 {
     public $search;
 

@@ -13,50 +13,28 @@ class SiteController extends Controller
 
     public function actionIndex()
     {   
-        $inputForm = new ItemDataForm;
-        $inputForm['city'] = 0;
-        $inputForm['items'] = [' '];
-        
-        if ($inputForm->load(Yii::$app->request->post()) && $inputForm->validate()) {
-
-            $ListaDeItens = ItemList::getItemsByName($inputForm['search']);
-
-            return $this->render('results',[
-                'itemList' => $ListaDeItens,
-                'model' => $inputForm
-            ]);
-
-        }
+        $searchForm = new ItemSearchForm;
 
         return $this->render('index', [
-            'model' => $inputForm
+            'searchModel' => $searchForm
         ]);
     
     }
 
-    public function actionUpgradeList()
-    {
-        $inputForm = new ItemDataForm;
 
-        if ($inputForm->load(Yii::$app->request->post()) && $inputForm->validate()) {
+    public function actionSearchItem()
+    {   
+        $searchForm = new ItemSearchForm;
 
-            $listaDeItens = ItemList::getItemsByName($inputForm['search']);
+        if ($searchForm->load(Yii::$app->request->post()) && $searchForm->validate()) {
 
-            $respostas =ItemList::getItemsData($inputForm['items'], $inputForm['city']);
+            $itemList = ItemList::getItemsByName($searchForm['search']);
 
-            return $this->renderAjax('_results',[
-                'dados' => $respostas,
-                'itemList' => $listaDeItens,
-                'model' => $inputForm
+            return $this->renderAjax('_index',[
+                'itemList' => $itemList,
             ]);
 
         }
-
-        //return $this->renderAjax('_results');
-
-
-
-
     }
 
 
