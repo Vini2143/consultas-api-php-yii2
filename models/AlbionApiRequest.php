@@ -6,29 +6,43 @@ use yii\httpclient\Client;
 
 class AlbionApiRequest extends Model
 {   
-    public $item;
+    public $itemCode;
     public $city;
     public $url;
 
-    public function __construct($item, $city)
-    {   
-        $this->item = $item;
-        $this->city = $city;
-        $this->url = $city ? 'https://west.albion-online-data.com/api/v2/stats/Prices/'. $item .'.json?locations=' . str_replace('%20', ' ', $city) : 
-        'https://west.albion-online-data.com/api/v2/stats/Prices/'. $item .'.json';
-
+    public function rules()
+    {
+        return [
+            [['itemCode', 'city'], 'required']
+        ];
     }
 
     public function executar()
     {
         $client = new Client;
+        $retorno = [];
+
+        $url = $this->city ? 'https://west.albion-online-data.com/api/v2/stats/Prices/'. $this->itemCode .'.json?locations=' . str_replace(' ', '%20', $this->city) : 
+        'https://west.albion-online-data.com/api/v2/stats/Prices/'. $this->itemCode .'.json';
         
         $resposta = $client->createRequest()
             ->setMethod('GET')
-            ->setUrl($this->url)
+            ->setUrl($url)
             ->send();
 
-        return $resposta->data;
+        foreach($resposta->data as $registro) {
+            $dados = [
+                'cidade' => $registro['city'],
+                'qualidade' => $registro['quality'],
+                'val_min' => $registro['sell_price_min'],
+                'val_max' => $registro['sell_price_max'],
+                
+            ];
+            
+            array_push($retorno, $dados);
+        }
+
+        return $retorno;
     }
 
 }

@@ -30,27 +30,20 @@ class ItemList extends ActiveRecord
                 'do Grão-mestre',
                 'do Ancião'
 
-            ], $tier .'.'. $enchant, $item->name);
+            ], '', $item->name);
 
-            $items[$item->item_code] = $name;
+            $items[$item->item_code] = ['name' => $name, 'tier' => $tier, 'enchant' => $enchant];
         }
 
         return $items;
     }
 
-    public static function getItemsData($items, $city)
+    public static function getItemData($item, $city)
     {
-        $resultados = [];
 
-        foreach ($items as $item) {
-            
-            $requisição = new AlbionApiRequest($item, $city);
-            $retorno = $requisição->executar();
-    
-            array_push($resultados, $retorno);
+        $requisição = new AlbionApiRequest($item, $city);
+        $retorno = $requisição->executar();
 
-        }
-
-        return $resultados;
+        return $retorno;
     }
 }

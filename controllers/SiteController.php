@@ -4,7 +4,7 @@ namespace projeto1\controllers;
 
 use yii\web\Controller;
 use projeto1\models\ItemSearchForm;
-use projeto1\models\ItemDataForm;
+use projeto1\models\AlbionApiRequest;
 use projeto1\models\ItemList;
 use Yii;
 
@@ -30,11 +30,36 @@ class SiteController extends Controller
 
             $itemList = ItemList::getItemsByName($searchForm['search']);
 
-            return $this->renderAjax('_index',[
-                'itemList' => $itemList,
+            return $this->renderAjax('_index', [
+                'dados' => $itemList,
             ]);
 
         }
+
+        return $this->redirect(['site/index']);
+    }
+
+    public function actionItemData()
+    {   
+        $request = new AlbionApiRequest;
+
+        $request->load(Yii::$app->request->post());
+
+        if ($request->validate()) {
+
+            /* $itemCode = 'T7_MAIN_AXE';
+            $city = 'Black Market'; */
+            $itemData = $request->executar();//ItemList::getItemData($itemCode, $city);
+
+            return $this->renderAjax('_itemData', [
+                'dados' => $itemData
+            ]);
+        }
+        
+        return $this->renderAjax('_itemData', [
+            'dados' => $request
+        ]);
+        
     }
 
 
